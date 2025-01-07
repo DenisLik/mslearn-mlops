@@ -1,4 +1,4 @@
-# Import libraries
+# Импорт библиотек
 
 import argparse
 import glob
@@ -9,18 +9,18 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 
-# define functions
+# определить функции
 def main(args):
-    # TO DO: enable autologging
+    # TO DO: включить автологирование
 
 
-    # read data
+    # читать данные
     df = get_csvs_df(args.training_data)
 
-    # split data
+    # разделить данные
     X_train, X_test, y_train, y_test = split_data(df)
 
-    # train model
+    # обучать модель
     train_model(args.reg_rate, X_train, X_test, y_train, y_test)
 
 
@@ -33,42 +33,43 @@ def get_csvs_df(path):
     return pd.concat((pd.read_csv(f) for f in csv_files), sort=False)
 
 
-# TO DO: add function to split data
+# TO DO: добавить функцию для разделения данных
+
 
 
 def train_model(reg_rate, X_train, X_test, y_train, y_test):
-    # train model
+    # обучаем модель
     LogisticRegression(C=1/reg_rate, solver="liblinear").fit(X_train, y_train)
 
 
 def parse_args():
-    # setup arg parser
+    # настройка парсера аргументов
     parser = argparse.ArgumentParser()
 
-    # add arguments
+    # добавляем аргументы
     parser.add_argument("--training_data", dest='training_data',
                         type=str)
     parser.add_argument("--reg_rate", dest='reg_rate',
                         type=float, default=0.01)
 
-    # parse args
+    # парсинг аргументов
     args = parser.parse_args()
 
-    # return args
+    # возврат аргументов
     return args
 
-# run script
+# запуск скрипта
 if __name__ == "__main__":
-    # add space in logs
+    # добавление места в логи
     print("\n\n")
     print("*" * 60)
 
-    # parse args
+    # парсинг аргументов
     args = parse_args()
 
-    # run main function
+    # запуск основной функции
     main(args)
 
-    # add space in logs
+    # добавление места в логи
     print("*" * 60)
     print("\n\n")
