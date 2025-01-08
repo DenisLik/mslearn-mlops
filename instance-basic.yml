@@ -1,0 +1,4 @@
+$schema: https://azuremlschemas.azureedge.net/latest/computeInstance.schema.json 
+name: ds11v2-ci
+type: computeinstance
+size: STANDARD_DS11_V2
