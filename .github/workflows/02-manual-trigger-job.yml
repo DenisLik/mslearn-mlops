@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
-      uses: actions/checkout@develop
+      uses: actions/checkout@v2
+      with:
+        ref: develop
     - name: Install az ml extension
       run: az extension add -n ml -y
     - name: Azure login
