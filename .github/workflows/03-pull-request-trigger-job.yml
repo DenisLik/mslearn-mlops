@@ -1,0 +1,24 @@
+name: Pull request trigger an Azure Machine Learning job
+
+on:
+  push:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Trigger Azure Machine Learning job
+      run: |
+        az ml job create --file ./src/job_from_ga.yml --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws --web
+
+
