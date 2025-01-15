@@ -1,4 +1,4 @@
-name: Code checks by push
+name: Code checks by pull request
 
 on:
   pull_request:
