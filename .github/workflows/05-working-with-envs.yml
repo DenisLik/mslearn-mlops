@@ -1,0 +1,43 @@
+name: Working with Github Environments and manually trigger an Azure Machine Learning job
+
+on:
+  workflow_dispatch:
+
+jobs:
+  development:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Trigger Azure Machine Learning job in development env
+      run: |
+        az ml job create --file ./src/job_from_ga_dev.yml --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws --stream
+
+  production:
+    needs: development
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Trigger Azure Machine Learning job in development env
+      run: |
+        az ml job create --file ./src/job_from_ga_prod.yml --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws --stream
+
