@@ -30,6 +30,6 @@ jobs:
         python -m pip install -r ./requirements.txt
     - name: Run pytest
       run: | 
-        python -m ./tests/test_train.py
+        pytest ./tests/test_train.py
 
 
