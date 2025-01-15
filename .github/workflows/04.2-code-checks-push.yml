@@ -1,9 +1,10 @@
 name: Code checks by push
 
 on:
-  push:
-    branches:
-      - develop
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - develop
 
 jobs:
   job1:

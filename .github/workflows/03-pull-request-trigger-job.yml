@@ -1,9 +1,10 @@
 name: Pull request trigger an Azure Machine Learning job
 
 on:
-  push:
-    branches:
-      - develop
+#  push:
+  workflow_dispatch:
+#    branches:
+#      - develop
 jobs:
   train:
     runs-on: ubuntu-latest
