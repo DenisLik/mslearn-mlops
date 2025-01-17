@@ -1,0 +1,26 @@
+name: Deploying model to an online endpoint
+
+on:
+  workflow_dispatch:
+
+jobs:
+  development:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+    - name: Check out repo
+      uses: actions/checkout@v2
+      with:
+        ref: develop
+    - name: Install az ml extension
+      run: az extension add -n ml -y
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+    - name: Create online model endpoint
+      run: |
+        az ml online-endpoint create --name delick-mlops-endpoint -f src/create-endpoint.yml --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws
+    - name: Trigger Model Deployment
+      run: |
+        az ml online-deployment create --name delick-mlops-deployment --endpoint delick-mlops-endpoint -f src/model_deployment.yml --all-traffic --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws

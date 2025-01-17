@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: delick-mlops-deployment
+endpoint_name: delick-mlops-endpoint
+model: azureml:diabetes-prediction:1
+instance_type: Standard_D2as_v4
+instance_count: 1
