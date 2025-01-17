@@ -20,7 +20,7 @@ jobs:
         creds: ${{secrets.AZURE_CREDENTIALS}}
     - name: Create online model endpoint
       run: |
-        az ml online-endpoint create --name delick-mlops-endpoint -f src/create-endpoint.yml --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws
+        az ml online-endpoint create --name delick-mlops-endpoint -f src/create-online-endpoint.yml --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws
     - name: Trigger Model Deployment
       run: |
-        az ml online-deployment create --name delick-mlops-deployment --endpoint delick-mlops-endpoint -f src/model_deployment.yml --all-traffic --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws
+        az ml online-deployment create --name delick-mlops-deployment --endpoint delick-mlops-endpoint -f src/model-deployment.yml --all-traffic --resource-group delick-mlops-westeurope-rg --workspace-name delick-mlops-westeurope-ws
